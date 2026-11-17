@@ -1,0 +1,65 @@
+[
+  {
+    "experiment": "linear_probe",
+    "test_accuracy": 0.9613,
+    "trainable_parameters": 7690,
+    "steps": null,
+    "selected_step": null,
+    "validation_accuracy": 0.975,
+    "seconds": 5.1580878749955446
+  },
+  {
+    "experiment": "head_only",
+    "test_accuracy": 0.947,
+    "trainable_parameters": 7690,
+    "steps": 500,
+    "selected_step": 400,
+    "validation_accuracy": 0.967,
+    "seconds": 174.36745679198066
+  },
+  {
+    "experiment": "last_block",
+    "test_accuracy": 0.9151,
+    "trainable_parameters": 7097098,
+    "steps": 300,
+    "selected_step": 200,
+    "validation_accuracy": 0.921,
+    "seconds": 88.12335041596089
+  },
+  {
+    "experiment": "last_block_3000",
+    "test_accuracy": 0.9256,
+    "trainable_parameters": 7097098,
+    "steps": 3000,
+    "selected_step": 1000,
+    "validation_accuracy": 0.942,
+    "seconds": 664.1020127920201
+  },
+  {
+    "experiment": "full_finetune",
+    "test_accuracy": 0.9283,
+    "trainable_parameters": 87462922,
+    "steps": 300,
+    "selected_step": 200,
+    "validation_accuracy": 0.944,
+    "seconds": 145.93436366698006
+  },
+  {
+    "experiment": "full_finetune_lr_scaled_1000",
+    "test_accuracy": 0.9563,
+    "trainable_parameters": 87462922,
+    "steps": 1000,
+    "selected_step": 800,
+    "validation_accuracy": 0.967,
+    "seconds": 655.7445200409857
+  },
+  {
+    "experiment": "full_finetune_paper_lr_1000",
+    "test_accuracy": 0.9757,
+    "trainable_parameters": 87462922,
+    "steps": 1000,
+    "selected_step": 600,
+    "validation_accuracy": 0.979,
+    "seconds": 672.2543573750299
+  }
+]

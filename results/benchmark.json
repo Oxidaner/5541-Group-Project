@@ -1,0 +1,45 @@
+{
+  "inference": [
+    {
+      "batch_size": 16,
+      "seconds": 0.03876434999983758,
+      "images_per_second": 412.75037502414045
+    },
+    {
+      "batch_size": 32,
+      "seconds": 0.07536336679477244,
+      "images_per_second": 424.6094801887178
+    },
+    {
+      "batch_size": 64,
+      "seconds": 0.15392718319781123,
+      "images_per_second": 415.7810119720949
+    }
+  ],
+  "training": [
+    {
+      "training_step": 0,
+      "batch_size": 32,
+      "seconds": 2.3559593749814667,
+      "loss": 2.3025851249694824
+    },
+    {
+      "training_step": 1,
+      "batch_size": 32,
+      "seconds": 0.2726822500117123,
+      "loss": 2.3022890090942383
+    },
+    {
+      "training_step": 2,
+      "batch_size": 32,
+      "seconds": 0.27323591598542407,
+      "loss": 2.301732063293457
+    },
+    {
+      "training_step": 3,
+      "batch_size": 32,
+      "seconds": 0.2738812909810804,
+      "loss": 2.300947666168213
+    }
+  ]
+}

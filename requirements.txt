@@ -1,0 +1,6 @@
+torch==2.8.0
+torchvision==0.23.0
+timm==1.0.22
+scikit-learn==1.7.2
+matplotlib==3.10.7
+requests==2.32.5

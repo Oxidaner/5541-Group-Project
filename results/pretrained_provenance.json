@@ -1,0 +1,7 @@
+{
+  "model_config": "timm/vit_base_patch32_224.orig_in21k",
+  "repository_revision": "4bfd55b246f2c4e4ae72d65fcaf84b6faca1cd90",
+  "weight_source": "https://storage.googleapis.com/vit_models/imagenet21k/ViT-B_32.npz",
+  "weight_size_bytes": 419441810,
+  "weight_sha256": "c0483c8051e6c5da8b644ccc85a586281e9cf32227d793074279e3f130db19d3"
+}

@@ -1,0 +1,8 @@
+{
+  "adjacent_grid_edges": 84,
+  "mean_cosine_adjacent": 0.6442254185676575,
+  "mean_cosine_far_manhattan_ge_6": -0.15666581690311432,
+  "cosine_difference_adjacent_minus_far": 0.8008912205696106,
+  "min_cosine": -0.5656172037124634,
+  "max_cosine": 1.0000007152557373
+}
