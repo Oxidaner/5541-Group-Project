@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.chart{position:absolute;left:120px;top:330px;width:1080px}
+.row{position:absolute;left:0;width:1080px;height:64px}
+.rname{position:absolute;left:0;top:6px;width:450px;font:500 21px/1.2 'Inter',sans-serif;color:#F2F6FF}
+.rtrack{position:absolute;left:470px;top:14px;width:620px;height:34px;background:rgba(38,52,94,.55);border-radius:3px}
+.rfill{position:absolute;left:0;top:0;height:34px;border-radius:3px}
+.rval{position:absolute;left:1110px;top:10px;width:150px;text-align:right;font:700 30px/1 'JetBrains Mono',monospace}
+.refline{position:absolute;top:318px;width:2px;height:540px;background:#7CF0FF;opacity:.85}
+.reflabel{position:absolute;top:872px;font:500 15px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:#7CF0FF}
+.score{position:absolute;right:96px;top:330px;width:520px;height:556px;border:1px solid #26345E;border-radius:18px;background:rgba(11,19,48,.55);padding:40px 44px}
+.score .big{font:700 100px/1 'Inter',sans-serif;color:#FF7AE0;letter-spacing:-.02em}
+.score .big small{display:block;font:500 20px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8FA0C4;margin-bottom:20px}
+.score .srow{display:flex;justify-content:space-between;padding:17px 0;border-top:1px solid #26345E;font:400 19px/1 'Inter',sans-serif;color:#C9D4EC}
+.score .srow b{font:600 20px/1 'JetBrains Mono',monospace;color:#F2F6FF}
+.score .srow .cy{color:#7CF0FF}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">RESULTS · CIFAR-10 TEST ACCURACY</div><div class="title">The <span class="mg">accuracy ladder</span> — one protocol at a time</div><div class="bar"></div>
+
+<div class="chart"><div class="row" style="top:0px"><div class="rname">Full fine-tune · paper LR 0.003</div><div class="rtrack"><div class="rfill" style="width:516px;background:#FF7AE0;box-shadow:0 0 24px #FF7AE088"></div></div><div class="rval" style="color:#FF7AE0">97.57</div></div><div class="row" style="top:78px"><div class="rname">Linear probe — frozen features</div><div class="rtrack"><div class="rfill" style="width:429px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">96.13</div></div><div class="row" style="top:156px"><div class="rname">Full fine-tune · LR-scaled 0.000375</div><div class="rtrack"><div class="rfill" style="width:399px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">95.63</div></div><div class="row" style="top:234px"><div class="rname">Classification head only · 500 steps</div><div class="rtrack"><div class="rfill" style="width:343px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">94.70</div></div><div class="row" style="top:312px"><div class="rname">Full fine-tune · 300 steps</div><div class="rtrack"><div class="rfill" style="width:231px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">92.83</div></div><div class="row" style="top:390px"><div class="rname">Last block · 3,000 steps</div><div class="rtrack"><div class="rfill" style="width:214px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">92.56</div></div><div class="row" style="top:468px"><div class="rname">Last block · 300 steps</div><div class="rtrack"><div class="rfill" style="width:151px;background:#7CF0FF;box-shadow:0 0 24px #7CF0FF88"></div></div><div class="rval" style="color:#7CF0FF">91.51</div></div></div>
+<div class="refline" style="left:709px"></div>
+<div class="reflabel" style="left:721px">PAPER · 98.79%</div>
+<div class="score">
+  <div class="big"><small>LOCAL BEST</small>97.57%</div>
+  <div class="srow"><span>vs paper reference</span><b class="cy">−1.22 pp</b></div>
+  <div class="srow"><span>Validation (best step 600)</span><b>97.90%</b></div>
+  <div class="srow"><span>Error rate</span><b>2.43%</b></div>
+  <div class="srow"><span>Paper error rate</span><b>1.21%</b></div>
+  <div class="srow"><span>Trainable params</span><b>87.5M</b></div>
+</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">06 / 13</div>
+</div></body></html>

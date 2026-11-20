@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.quote{position:absolute;left:96px;top:330px;width:860px;font:600 46px/1.22 'Inter',sans-serif;color:#F2F6FF}
+.quote .cy{color:#7CF0FF}
+.quote .mg{color:#FF7AE0}
+.byline{position:absolute;left:96px;top:510px;font:400 19px/1 'JetBrains Mono',monospace;color:#8FA0C4;letter-spacing:.08em}
+.panel{position:absolute;right:96px;top:330px;width:720px}
+.fact{margin-bottom:24px;border-left:2px solid #7CF0FF;padding-left:22px}
+.fact .f{font:400 16px/1.5 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8FA0C4;text-transform:uppercase}
+.fact .v{font:500 23px/1.35 'Inter',sans-serif;color:#F2F6FF;margin-top:6px}
+.fact .v .mg{color:#FF7AE0}
+.glyph{position:absolute;left:96px;top:620px;font:700 92px/1 'Inter',sans-serif;color:#7CF0FF;opacity:.14}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">BACKGROUND · ICLR 2021</div><div class="title">The paper that taught <span class="cy">transformers</span> to see</div><div class="bar"></div>
+
+<div class="quote">“An image is worth <span class="cy">16×16 words</span>” — split an image into patches and treat them as <span class="mg">a sentence of tokens</span>.</div>
+<div class="byline">DOSOVITSKIY ET AL. · ICLR 2021 · GOOGLE RESEARCH BRAIN</div>
+<div class="panel">
+  <div class="fact"><div class="f">Model used here</div><div class="v">ViT-B/32 · 86M params · <span class="mg">pretrained on ImageNet-21k</span></div></div>
+  <div class="fact"><div class="f">Namesake grid</div><div class="v">16×16 patches → 196 tokens (ViT-B/16); ours: 32×32 → 49 + CLS</div></div>
+  <div class="fact"><div class="f">Why it matters</div><div class="v">No convolutions — attention alone reaches (then beats) CNNs at scale</div></div>
+  <div class="fact"><div class="f">CIFAR-10 reference</div><div class="v">98.79% @ 384 px · 10,000 steps · batch 512</div></div>
+</div>
+<div class="glyph">16×16</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">03 / 13</div>
+</div></body></html>

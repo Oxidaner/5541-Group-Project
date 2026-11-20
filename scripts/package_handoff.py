@@ -14,10 +14,12 @@ def main():
     inputs = [
         ROOT / name for name in (
             "README.md", "HANDOFF.md", "Report_结构草稿.md",
-            "Group Project.pdf", "docs/protocol.md", "requirements.txt",
+            "Group Project.pdf", "docs/protocol.md", "docs/efficiency_plan.md", "requirements.txt",
             "requirements-lock.txt", "requirements-report.txt",
             "requirements-handoff.txt", "vit_experiment.py", "analyze_results.py",
             "scripts/build_report.py", "scripts/reproduce_experiments.sh",
+            "scripts/reproduce_efficiency.sh", "scripts/benchmark_patch_dropout.py",
+            "scripts/analyze_efficiency.py",
             "scripts/package_handoff.py",
             "output/pdf/ViT_B32_CIFAR10_Reproduction_Draft.pdf",
         )

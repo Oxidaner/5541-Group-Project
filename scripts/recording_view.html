@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>COMP5541 · Live ViT Code Run</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#09111d;color:#e5edf7;font:16px -apple-system,BlinkMacSystemFont,sans-serif}main{max-width:1560px;margin:auto;padding:38px 48px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.eyebrow{color:#70d2bd;font-size:13px;letter-spacing:2px;text-transform:uppercase}h1{font-size:34px;letter-spacing:-.7px;margin:8px 0}p{color:#97abc4;margin:8px 0;line-height:1.5}.badge{border:1px solid #33455b;border-radius:30px;padding:10px 18px;color:#91e1cc}button{font:inherit;border:0;border-radius:7px;padding:12px 22px;background:#71d8bc;color:#06251e;font-weight:650;cursor:pointer}.grid{display:grid;grid-template-columns:1.03fr 1fr;gap:20px}.panel{background:#101d2d;border:1px solid #26394f;border-radius:12px;overflow:hidden}.label{padding:14px 20px;border-bottom:1px solid #26394f;font-size:13px;color:#a6bed8;display:flex;justify-content:space-between}.content{padding:20px}pre{margin:0;font:14px/1.85 Menlo,monospace;white-space:pre-wrap;color:#d3e1f2}.dim{color:#758ea9}.code{color:#81c9f4}.terminal{height:320px;overflow:hidden}#logs{font:14px/1.75 Menlo,monospace;color:#b4cde2;white-space:pre-wrap}.bar{height:7px;background:#26394f;border-radius:8px;margin:16px 0 10px;overflow:hidden}.bar div{height:100%;background:#71d8bc;width:0;transition:width .5s}.progress{display:flex;justify-content:space-between;color:#a6bed8;font-size:14px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.card{padding:20px 24px;background:#101d2d;border:1px solid #26394f;border-radius:10px;display:flex;justify-content:space-between;align-items:center}.number{font-size:32px;color:#71d8bc;font-weight:650}small{display:block;font-size:12px;color:#8ba2bd;margin-top:6px}.examples{display:flex;gap:18px}.sample{display:flex;align-items:center;gap:9px;font-size:12px;flex:1;line-height:1.7}.sample img{width:58px;height:58px;image-rendering:pixelated;border-radius:5px}.samples{min-height:100px}.footer{margin-top:20px;border-top:1px solid #26394f;padding-top:14px;color:#8ba2bd;font-size:13px;line-height:1.7}.success{color:#8be2ca}#summary{color:#c4d5e8}#completed{display:none;background:#153c34;color:#a0f0d6;padding:14px 20px;border-radius:8px;margin-top:18px}code{font-family:Menlo,monospace}body:fullscreen main{padding-top:40px}
+</style>
+<main><header><div><div class="eyebrow">COMP5541 · Code execution recording</div><h1>Vision Transformer · Live verification</h1><p>ImageNet-21k pretrained ViT-B/32 → official CIFAR-10 test set</p></div><div><span class="badge" id="status">READY</span></div></header>
+<div class="grid"><section class="panel"><div class="label"><span>PYTHON · scripts/recording_run.py</span><span>Actual evaluation loop</span></div><div class="content"><pre><span class="dim">@torch.inference_mode()</span>
+<span class="code">def evaluate_live(model, loader, dev, label):</span>
+    model.eval()
+    for images, targets in loader:
+        logits = model(images.to(dev))
+        predictions = logits.argmax(dim=1).cpu().numpy()
+        all_labels.extend(targets.numpy().tolist())
+        all_predictions.extend(predictions.tolist())
+
+<span class="dim"># Both retained checkpoints; no cached predictions as output</span>
+<span class="dim"># Baseline & PatchDropout: all 50 tokens at evaluation</span></pre></div></section>
+<section class="panel"><div class="label"><span>PYTHON PROCESS · LIVE OUTPUT</span><span id="device">Local execution</span></div><div class="content"><div class="terminal"><div id="logs">$ .venv/bin/python -m scripts.recording_run
+
+Two complete test passes · 10,000 images each
+Validation-selected checkpoints · no retraining
+
+Ready to run locally.</div></div></div></section></div>
+<div class="bar"><div id="bar"></div></div><div class="progress"><span id="stage">Load checkpoint → baseline test → PatchDropout test → verification</span><span id="counter">0 / 20,000 images</span></div>
+<div class="cards"><div class="card"><div>ViT-B/32 baseline<small id="bdetail">Full test split · validation-selected step 600</small></div><div class="number" id="baseline">—</div></div><div class="card"><div>PatchDropout 25%<small id="pdetail">Full test split · validation-selected step 800</small></div><div class="number" id="patch">—</div></div></div>
+<section class="panel samples"><div class="label">LIVE BASELINE PREDICTIONS · FIRST SIX OFFICIAL TEST IMAGES</div><div class="content examples" id="examples"><p>Images and predictions will appear after baseline inference completes.</p></div></section>
+<div id="completed">✓ Both evaluations completed successfully · exit code 0 · predictions saved</div>
+<div class="footer"><div id="summary">Scope: live inference of trained checkpoints. Historical training times are reported separately after verification.</div><div>224 × 224 · batch 64 · PyTorch 2.8.0 · timm 1.0.22 · one seed · exploratory comparison</div></div>
+<div style="margin-top:18px" id="controls"><button onclick="start()">Run complete verification</button><span class="dim" style="margin-left:18px">About 2 minutes · runs Python on this Mac</span></div>
+</main>
+<script>
+let seen=0,phase=0,lines=[];
+const $=s=>document.getElementById(s);
+function line(s){lines.push(s);$('logs').textContent=lines.slice(-14).join('\n')}
+async function start(){seen=0;lines=[];phase=0;$('controls').style.display='none';$('status').textContent='RUNNING';line('$ .venv/bin/python -m scripts.recording_run');await fetch('/start',{method:'POST'})}
+function event(e){
+if(e.event==='environment'){$('device').textContent=`Python ${e.python} · ${e.device.toUpperCase()}`}
+if(e.event==='message')line(e.text);
+if(e.event==='start'){phase=e.index;$('stage').textContent=`${e.index+1} / 2 · ${e.label} · live inference`}
+if(e.event==='progress'){let n=phase*10000+e.done;$('bar').style.width=n/200+'%';$('counter').textContent=n.toLocaleString()+' / 20,000 images'}
+if(e.event==='result'){let tag=e.index===0?'baseline':'patch';$(tag).textContent=(e.accuracy*100).toFixed(2)+'%';$(e.index===0?'bdetail':'pdetail').textContent=`${e.correct.toLocaleString()} / 10,000 correct · ${e.seconds.toFixed(1)} s live inference`}
+if(e.event==='examples'){$('examples').replaceChildren();for(let x of e.items){let d=document.createElement('div');d.className='sample';let im=document.createElement('img');im.src='data:image/png;base64,'+x.image;let t=document.createElement('div');t.textContent='True: '+x.truth;let b=document.createElement('div');b.className='success';b.textContent='Pred: '+x.prediction;t.append(b);d.append(im,t);$('examples').append(d)}}
+if(e.event==='complete'){$('summary').textContent=`Historical training experiment (not rerun here): ${e.historical_training_seconds[0].toFixed(1)} s → ${e.historical_training_seconds[1].toFixed(1)} s · ${(e.historical_training_time_reduction*100).toFixed(1)}% less training time · test accuracy −0.10 percentage points.`}
+if(e.event==='exit'){$('status').textContent=e.code===0?'VERIFIED':'ERROR';$('stage').textContent=e.code===0?'Completed · both full test passes verified':'Execution failed';if(e.code===0){$('completed').style.display='block'}}
+}
+setInterval(async()=>{let data=await(await fetch('/events')).json();for(;seen<data.length;seen++)event(data[seen])},500)
+</script></html>

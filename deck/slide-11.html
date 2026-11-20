@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.card{position:absolute;width:404px;height:160px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);padding:26px 30px}
+.card .big{font:700 50px/1 'Inter',sans-serif;color:#7CF0FF;letter-spacing:-.01em}
+.card .f{font:400 16px/1.5 'JetBrains Mono',monospace;letter-spacing:.09em;color:#8FA0C4;text-transform:uppercase;margin-top:10px}
+.card .big .mg{color:#FF7AE0}
+.note{position:absolute;left:96px;top:858px;width:1728px;font:400 16px/1.5 'JetBrains Mono',monospace;color:#8FA0C4;letter-spacing:.03em}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">EXTENSION · PATCHDROPOUT</div><div class="title">Faster training, nearly free</div><div class="bar"></div>
+
+<div class="card" style="left:96px;top:300px"><div class="big">50 → <span class="mg">37</span></div><div class="f">training tokens · 25% patches dropped + CLS</div></div>
+<div class="card" style="left:536px;top:300px"><div class="big">−15.7%</div><div class="f">training time · 747.3 → 630.0 s</div></div>
+<div class="card" style="left:976px;top:300px"><div class="big" style="color:#FF7AE0">−0.10 pp</div><div class="f">test accuracy · 97.57 → 97.47%</div></div>
+<div class="card" style="left:1416px;top:300px"><div class="big">97.90%</div><div class="f">validation — identical, both runs</div></div>
+<img src="assets/eff_tradeoff.png" style="position:absolute;left:96px;top:510px;width:851px;height:300px;border-radius:14px;border:1px solid #26345E;box-shadow:0 0 60px rgba(124,240,255,.10),0 24px 60px rgba(0,0,0,.45)">
+<img src="assets/eff_curves.png" style="position:absolute;left:977px;top:510px;width:811px;height:300px;border-radius:14px;border:1px solid #26345E;box-shadow:0 0 60px rgba(124,240,255,.10),0 24px 60px rgba(0,0,0,.45)">
+<div class="note">METHOD: TRAINING-ONLY PATCHDROPOUT (LIU ET AL., 2022) VIA TIMM 1.0.22 · EVALUATION ALWAYS USES ALL 50 TOKENS · BOTH RUNS: 1,000 STEPS · BATCH 64 · LR 0.003 · SEED 5541</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">11 / 13</div>
+</div></body></html>

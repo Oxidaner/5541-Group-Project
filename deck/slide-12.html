@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.card{position:absolute;width:846px;height:196px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);padding:30px 34px}
+.card .f{font:600 24px/1 'Inter',sans-serif;color:#F2F6FF}
+.card .v{font:400 20px/1.55 'Inter',sans-serif;color:#C9D4EC;margin-top:12px}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">DISCUSSION</div><div class="title">Honest limits</div><div class="bar"></div>
+<div class="card" style="left:96px;top:310px"><div class="f"><span style="color:#7CF0FF">●</span> Budget, not method</div><div class="v">224 px · 1,000 steps vs the paper's 384 px · 10,000 steps — the 1.22 pp gap is fully explained by a smaller budget.</div></div><div class="card" style="left:978px;top:310px"><div class="f"><span style="color:#7CF0FF">●</span> One seed</div><div class="v">Every result is a single run per condition; variance across seeds is not measured.</div></div><div class="card" style="left:96px;top:528px"><div class="f"><span style="color:#FF7AE0">●</span> Exploratory LR choice</div><div class="v">The LR 0.003 run was chosen after earlier test scores were inspected — the cross-run comparison is exploratory, not confirmatory.</div></div><div class="card" style="left:978px;top:528px"><div class="f"><span style="color:#FF7AE0">●</span> Descriptive analysis</div><div class="v">Attention and position-encoding findings describe this model; they do not prove a causal mechanism.</div></div><div class="card" style="left:96px;top:746px"><div class="f"><span style="color:#FFB454">●</span> Extension, not invention</div><div class="v">PatchDropout is an existing method (Liu et al., 2022), applied through timm — a reproduction plus efficiency probe.</div></div>
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">12 / 13</div>
+</div></body></html>

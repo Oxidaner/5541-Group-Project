@@ -33,6 +33,28 @@ uv pip install --python .venv/bin/python -r requirements-lock.txt
 
 冻结特征线性探测为 96.13%，batch-scaled LR 全量微调为 95.63%，分类头微调为 94.70%，末层 3,000 步微调为 92.56%。交叉 run 的分数用于探索性分析；确认性比较仍需未查看过的新测试划分。完整配置和日志位于 `results/`。
 
+## 新增效率改动：PatchDropout
+
+2026-11-17 完成两组新的 1,000 步对照。训练时随机保留 49 个图像 patch 中的 36 个，加 CLS 共 37 tokens；验证和测试恢复全部 50 tokens。使用 [PatchDropout](https://arxiv.org/abs/2208.07220) 的已有方法及 timm 公共实现，作为 ViT 复现后的效率扩展。原来的最优准确率模型继续保留。
+
+| 条件 | 最佳验证准确率 | 测试准确率 | 完整训练耗时 | 验证选中步数 |
+| --- | ---: | ---: | ---: | ---: |
+| 新跑基线，50 tokens | 97.90% | 97.57% | 747.27 秒 | 600 |
+| PatchDropout 25%，37 tokens | 97.90% | 97.47% | 630.01 秒 | 800 |
+
+**训练耗时减少 15.7%（117.26 秒），测试准确率下降 0.10 个百分点。**时间包括数据加载、五次验证和保存检查点，不包括初始化和最终测试。两组均为 batch 64、LR 0.003、seed 5541，训练样本预算和其他配置相同。新基线的完整损失/验证日志与旧基线一致，10,000 条测试预测也完全相同。验证选出的两个检查点在新一轮测试前固定，不根据测试分数搜索 dropout 比例。
+
+设备同步的合成 batch 微基准中，单步 forward/backward/clip/SGD 中位数从 0.566 秒降至 0.441 秒，减少 22.2%。这不包括数据与验证开销，不能替代上表完整训练耗时。参数量和测试时 token 数未减少，未测峰值内存，也不声称推理加速。每条件仅一个 seed、一次完整训练；测试集此前已查看，结果为探索性对照。
+
+```bash
+# 重跑会覆盖这两个命名 run；原始权重和数据需要已 prepare。
+bash scripts/reproduce_efficiency.sh
+# 只重建对照图和审计结果，不训练：
+.venv/bin/python -m scripts.analyze_efficiency
+```
+
+训练前写定的方案见 `docs/efficiency_plan.md`；原始证据见 `results/efficiency_comparison.json`、两个 run 的配置/日志/预测以及 `results/patch_dropout_benchmark.json`。图表为 `results/figures/efficiency_tradeoff.png` 和 `efficiency_validation_curves.png`。
+
 ## 文件说明
 
 - `vit_experiment.py`：准备数据、设备实测、提取特征、线性分类和微调。
@@ -59,3 +81,5 @@ uv pip install --python .venv/bin/python -r requirements-lock.txt
 最终模型保留在 `results/full_finetune_paper_lr_1000/best.pt`，供本机演示，不放入压缩包。交接包包含代码、配置、预测、图表和报告。运行录屏及不超过四分钟的讲解视频尚未制作，因此交接包不是可直接提交的完整材料。
 
 scripts/reproduce_experiments.sh 记录七组实验的精确命令。执行时会重跑训练并覆盖对应 run 结果，应先备份；已经校验的原始权重和特征缓存可以复用。
+
+scripts/reproduce_efficiency.sh 另记录新增两组效率实验。新增模型分别保留于 `results/efficiency_baseline_1000/best.pt` 和 `results/efficiency_patchdrop25_1000/best.pt`，仅供本机演示，不进入交接包。

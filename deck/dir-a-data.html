@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#0B0E14}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden}
+
+.kick{position:absolute;left:90px;top:70px;font:500 19px/1 'JetBrains Mono',monospace;letter-spacing:.3em;color:#35E0C2}
+.title{position:absolute;left:86px;top:130px;font:700 62px/1.05 'Space Grotesk',sans-serif;color:#E9EDF5;letter-spacing:-.01em}
+.sub{position:absolute;left:90px;top:215px;font:400 23px/1 'Inter',sans-serif;color:#8B94A7}
+.chart{position:absolute;left:120px;top:260px;width:1040px}
+.row{position:absolute;left:0;width:1040px;height:86px}
+.rname{position:absolute;left:0;top:8px;width:340px;font:500 21px/1.2 'Space Grotesk',sans-serif;color:#E9EDF5}
+.rparam{display:block;font:400 16px/1.4 'JetBrains Mono',monospace;color:#8B94A7}
+.rtrack{position:absolute;left:360px;top:26px;width:820px;height:34px;background:#1D2433;border-radius:2px}
+.rfill{position:absolute;left:0;top:0;height:34px;border-radius:2px}
+.rval{position:absolute;left:1204px;top:22px;width:150px;text-align:right;font:700 30px/1 'JetBrains Mono',monospace}
+.refline{position:absolute;top:250px;width:2px;height:700px;background:#FFB454;opacity:.9}
+.reflabel{position:absolute;top:950px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#FFB454}
+.foot{position:absolute;left:90px;top:1010px;font:400 17px/1.4 'JetBrains Mono',monospace;color:#8B94A7}
+.axis{position:absolute;left:120px;top:1030px;font:400 16px/1 'JetBrains Mono',monospace;color:#8B94A7}
+
+</style></head><body><div class="slide">
+<div class="kick">RESULTS &nbsp;·&nbsp; CIFAR-10 TEST ACCURACY</div>
+<div class="title">How much of the network must move?</div>
+<div class="sub">Fine-tuning protocol vs. test accuracy — ViT-B/32 · 224 px · batch 64.</div>
+<div class="chart"><div class="row" style="top:260px"><div class="rname">Linear probe — frozen features<span class="rparam">7.7k</span></div><div class="rtrack"><div class="rfill" style="width:573px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">96.13%</div></div><div class="row" style="top:364px"><div class="rname">Classification head only<span class="rparam">7.7k</span></div><div class="rtrack"><div class="rfill" style="width:458px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">94.70%</div></div><div class="row" style="top:468px"><div class="rname">Last block · 300 steps<span class="rparam">7.1M</span></div><div class="rtrack"><div class="rfill" style="width:202px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">91.51%</div></div><div class="row" style="top:572px"><div class="rname">Last block · 3,000 steps<span class="rparam">7.1M</span></div><div class="rtrack"><div class="rfill" style="width:286px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">92.56%</div></div><div class="row" style="top:676px"><div class="rname">Full fine-tune · 300 steps<span class="rparam">87.5M</span></div><div class="rtrack"><div class="rfill" style="width:308px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">92.83%</div></div><div class="row" style="top:780px"><div class="rname">Full fine-tune · LR-scaled<span class="rparam">87.5M</span></div><div class="rtrack"><div class="rfill" style="width:533px;background:#35E0C2"></div></div><div class="rval" style="color:#E9EDF5">95.63%</div></div><div class="row" style="top:884px"><div class="rname">Full fine-tune · paper LR<span class="rparam">87.5M</span></div><div class="rtrack"><div class="rfill" style="width:689px;background:#FFB454"></div></div><div class="rval" style="color:#FFB454">97.57%</div></div></div>
+<div class="refline" style="left:907px"></div>
+<div class="reflabel" style="left:921px">PAPER REFERENCE · 98.79% · 384 px · 10k steps</div>
+<div class="foot">Local runs use 224 px inputs and shorter budgets — a resource-scaled reproduction, not an exact replay of the paper protocol.</div>
+</div></body></html>

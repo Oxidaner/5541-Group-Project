@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden}
+
+.kick{position:absolute;left:90px;top:70px;font:500 19px/1 'JetBrains Mono',monospace;letter-spacing:.3em;color:#7CF0FF}
+.title{position:absolute;left:86px;top:128px;font:700 64px/1 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.sub{position:absolute;left:90px;top:215px;font:400 22px/1 'Inter',sans-serif;color:#9AA8C7}
+.line{position:absolute;left:90px;top:560px;width:1500px;height:2px;background:linear-gradient(90deg, rgba(124,240,255,.1), rgba(124,240,255,.8), rgba(255,122,224,.8))}
+.dot{position:absolute;width:16px;height:16px;border-radius:50%;transform:translate(-8px,-7px)}
+.dlab{position:absolute;text-align:center;font:400 17px/1.5 'JetBrains Mono',monospace;color:#9AA8C7}
+.dlab b{font-weight:700}
+.refline{position:absolute;top:430px;width:2px;height:260px;background:#7CF0FF;opacity:.55}
+.reflabel{position:absolute;top:412px;font:500 16px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:#7CF0FF}
+.axis{position:absolute;left:90px;top:790px;width:1500px;display:flex;justify-content:space-between;font:400 18px/1 'JetBrains Mono',monospace;color:#9AA8C7}
+.foot{position:absolute;left:90px;top:980px;font:400 18px/1.4 'JetBrains Mono',monospace;color:#9AA8C7}
+
+</style></head><body><div class="slide">
+<div class="kick">RESULTS · ACCURACY LADDER</div>
+<div class="title">Every protocol earns its place on the spectrum</div>
+<div class="sub">Test accuracy, 88–99.5% scale — the reference sits alone at the bright end.</div>
+<div class="line"></div>
+<div class="dot" style="left:1150px;top:560px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:1040px;top:594px;width:220px">Linear probe<br><b style="color:#7CF0FF">96.13%</b></div><div class="dot" style="left:964px;top:490px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:854px;top:524px;width:220px">Head only<br><b style="color:#7CF0FF">94.70%</b></div><div class="dot" style="left:548px;top:420px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:438px;top:454px;width:220px">Last block<br><b style="color:#7CF0FF">91.51%</b></div><div class="dot" style="left:685px;top:350px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:575px;top:384px;width:220px">Last block ·3k<br><b style="color:#7CF0FF">92.56%</b></div><div class="dot" style="left:720px;top:560px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:610px;top:594px;width:220px">Full 300<br><b style="color:#7CF0FF">92.83%</b></div><div class="dot" style="left:1085px;top:490px;background:#7CF0FF;box-shadow:0 0 30px #7CF0FF"></div><div class="dlab" style="left:975px;top:524px;width:220px">Full LR-scaled<br><b style="color:#7CF0FF">95.63%</b></div><div class="dot" style="left:1338px;top:420px;background:#FF7AE0;box-shadow:0 0 30px #FF7AE0"></div><div class="dlab" style="left:1228px;top:454px;width:220px">Full paper LR<br><b style="color:#FF7AE0">97.57%</b></div>
+<div class="refline" style="left:1497px"></div>
+<div class="reflabel" style="left:1347px">PAPER · 98.79%</div>
+<div class="axis"><span>88%</span><span>91%</span><span>94%</span><span>97%</span><span>99.5%</span></div>
+<div class="foot">224 px inputs · batch 64 · best-of-validation checkpoints · fixed test split.</div>
+</div></body></html>

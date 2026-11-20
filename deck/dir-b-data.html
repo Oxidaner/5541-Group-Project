@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#F6F1E7}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden}
+
+.mast{position:absolute;left:90px;top:62px;font:600 16px/1 'Inter',sans-serif;letter-spacing:.28em;color:#7A6F5F;text-transform:uppercase}
+.title{position:absolute;left:86px;top:120px;font:400 76px/1 'Fraunces',serif;color:#16130E;letter-spacing:-.015em}
+.rule{position:absolute;left:90px;top:250px;width:1740px;height:2px;background:#16130E}
+.th{position:absolute;top:258px;font:600 16px/1 'Inter',sans-serif;letter-spacing:.2em;color:#7A6F5F;text-transform:uppercase}
+.c1{position:absolute;left:90px;width:780px;font:500 24px/1 'Fraunces',serif;color:#16130E}
+.c2{position:absolute;left:950px;width:220px;text-align:right;font:400 22px/1 'JetBrains Mono',monospace;color:#7A6F5F}
+.c3{position:absolute;left:1250px;width:200px;text-align:right;font:400 22px/1 'JetBrains Mono',monospace;color:#7A6F5F}
+.c4{position:absolute;left:1540px;width:290px;text-align:right;font:600 26px/1 'JetBrains Mono',monospace;color:#16130E}
+.c4.red{color:#C5462D}
+.tr{position:absolute;height:60px;border-top:1px solid #16130E2E}
+.ref{position:absolute;left:90px;top:906px;font:500 22px/1 'Fraunces',serif;color:#16130E}
+.ref span{color:#C5462D}
+.foot{position:absolute;left:90px;top:980px;width:1500px;font:400 18px/1.5 'Inter',sans-serif;color:#7A6F5F}
+
+</style></head><body><div class="slide">
+<div class="mast">Results · CIFAR-10 test accuracy by protocol</div>
+<div class="title">Accuracy, by protocol</div>
+<div class="rule"></div>
+<div class="th c1">Configuration</div><div class="th c2">Params</div><div class="th c3">Steps</div><div class="th c4">Test acc.</div>
+<div class="tr" style="top:300px"><span class="c1">Linear probe — frozen features</span><span class="c2">7.7k</span><span class="c3">—</span><span class="c4">96.13%</span></div><div class="tr" style="top:384px"><span class="c1">Classification head only</span><span class="c2">7.7k</span><span class="c3">500</span><span class="c4">94.70%</span></div><div class="tr" style="top:468px"><span class="c1">Last block</span><span class="c2">7.1M</span><span class="c3">300</span><span class="c4">91.51%</span></div><div class="tr" style="top:552px"><span class="c1">Last block (long)</span><span class="c2">7.1M</span><span class="c3">3,000</span><span class="c4">92.56%</span></div><div class="tr" style="top:636px"><span class="c1">Full fine-tune</span><span class="c2">87.5M</span><span class="c3">300</span><span class="c4">92.83%</span></div><div class="tr" style="top:720px"><span class="c1">Full fine-tune · LR-scaled</span><span class="c2">87.5M</span><span class="c3">1,000</span><span class="c4">95.63%</span></div><div class="tr" style="top:804px"><span class="c1">Full fine-tune · paper LR</span><span class="c2">87.5M</span><span class="c3">1,000</span><span class="c4 red">97.57%</span></div>
+<div class="ref">Paper reference — <span>98.79%</span> · 384 px · 10,000 steps · ViT-B/32</div>
+<div class="foot">Every local run evaluates the same held-out test split; the best checkpoint is chosen on validation. Test labels are never used for tuning.</div>
+</div></body></html>

@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.card{position:absolute;width:420px;height:168px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);padding:28px 30px}
+.card .big{font:700 54px/1 'Inter',sans-serif;color:#7CF0FF;letter-spacing:-.01em}
+.card .f{font:400 16px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8FA0C4;text-transform:uppercase;margin-top:12px}
+.explain{position:absolute;left:1030px;top:660px;width:794px;font:400 21px/1.6 'Inter',sans-serif;color:#C9D4EC}
+.explain b{color:#F2F6FF}
+.explain .cy{color:#7CF0FF}
+.explain .mg{color:#FF7AE0}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">ANALYSIS · POSITIONAL ENCODING</div><div class="title">Position embeddings <span class="cy">learn the grid</span></div><div class="bar"></div>
+
+<img src="assets/position_similarity.png" style="position:absolute;left:96px;top:300px;width:700px;height:603px;border-radius:14px;border:1px solid #26345E;box-shadow:0 0 60px rgba(124,240,255,.10),0 24px 60px rgba(0,0,0,.45)">
+<div class="card" style="left:920px;top:300px"><div class="big">0.644</div><div class="f">mean cosine · adjacent patches</div></div>
+<div class="card" style="left:920px;top:492px"><div class="big" style="color:#FF7AE0">−0.157</div><div class="f">mean cosine · far patches (≥6 apart)</div></div>
+<div class="card" style="left:1404px;top:300px"><div class="big" style="color:#FFB454">0.801</div><div class="f">adjacent − far gap</div></div>
+<div class="card" style="left:1404px;top:492px"><div class="big">7 × 7</div><div class="f">grid topology recovered</div></div>
+<div class="explain">Pretrained position embeddings <b>learn a 2-D grid</b>: neighbours align, distant patches anti-correlate. The model reconstructs <span class="cy">where</span> each patch sits — without ever being told.</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">09 / 13</div>
+</div></body></html>

@@ -1,0 +1,55 @@
+{
+  "method": "training-only PatchDropout, rate 0.25, timm 1.0.22",
+  "conditions": [
+    {
+      "method": "full",
+      "name": "efficiency_baseline_1000",
+      "test_accuracy": 0.9757,
+      "test_size": 10000,
+      "best_validation_accuracy": 0.979,
+      "selected_step": 600,
+      "steps": 1000,
+      "train_seconds_including_validation": 747.2718387499917,
+      "test_seconds": 41.73717466602102,
+      "trainable_parameters": 87462922,
+      "patch_drop_rate": 0.0,
+      "training_tokens": 50,
+      "evaluation_tokens": 50,
+      "paper_reference_accuracy": 0.9879,
+      "difference_percentage_points": -1.2199999999999989
+    },
+    {
+      "method": "full",
+      "name": "efficiency_patchdrop25_1000",
+      "test_accuracy": 0.9747,
+      "test_size": 10000,
+      "best_validation_accuracy": 0.979,
+      "selected_step": 800,
+      "steps": 1000,
+      "train_seconds_including_validation": 630.0141344170552,
+      "test_seconds": 43.108421624987386,
+      "trainable_parameters": 87462922,
+      "patch_drop_rate": 0.25,
+      "training_tokens": 37,
+      "evaluation_tokens": 50,
+      "paper_reference_accuracy": 0.9879,
+      "difference_percentage_points": -1.319999999999999
+    }
+  ],
+  "train_time_reduction_fraction": 0.15691438945308156,
+  "train_speedup_ratio": 1.1861191645191163,
+  "saved_training_seconds": 117.25770433293656,
+  "validation_difference_percentage_points": 0.0,
+  "test_difference_percentage_points": -0.10000000000000009,
+  "predefined_goal_met": true,
+  "paired_test_counts": {
+    "both_correct": 9704,
+    "baseline_only_correct": 53,
+    "patchdrop_only_correct": 43,
+    "both_wrong": 200
+  },
+  "baseline_historical_prediction_disagreements": 0,
+  "baseline_historical_history_equal_excluding_time": true,
+  "timing_scope": "1,000 training steps including loading, validation and checkpoint writes; excludes initialization and final test",
+  "limitations": "One seed and one complete run per condition; same previously inspected CIFAR-10 test set; exploratory, not significance evidence; no inference or measured peak-memory improvement claimed."
+}

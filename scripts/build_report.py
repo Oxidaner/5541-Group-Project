@@ -18,6 +18,9 @@ probe_result = json.loads((ROOT / 'results/linear_probe.json').read_text())
 head_result = json.loads((ROOT / 'results/head_only/metrics.json').read_text())
 last_result = json.loads((ROOT / 'results/last_block_3000/metrics.json').read_text())
 short_full_result = json.loads((ROOT / 'results/full_finetune/metrics.json').read_text())
+efficiency = json.loads((ROOT / 'results/efficiency_comparison.json').read_text())
+eff_base, eff_drop = efficiency['conditions']
+micro = json.loads((ROOT / 'results/patch_dropout_benchmark.json').read_text())
 paper_accuracy = main_result['paper_reference_accuracy'] * 100
 main_test = main_result['test_accuracy'] * 100
 main_val = main_result['best_validation_accuracy'] * 100
@@ -127,19 +130,22 @@ story += [P('Representation and error analysis','H1CN'),
           P('Figure 2. Pairwise cosine similarity of the 49 pretrained positional vectors. Neighboring positions are more similar on average than distant positions.','CaptionCN'),
           fitted(FIG/'full_finetune_paper_lr_1000_attention.png',W-34*mm,56*mm),
           P('Figure 3. Last-block mean CLS-to-patch attention for one correctly classified cat. The pretrained map emphasizes the upper-left patch; after fine-tuning, both upper corners gain weight. These patches cover background and cushion rather than the cat. This example does not demonstrate object localization.','CaptionCN'),
-          P(f'In the best full fine-tuning run, cat accuracy is {cat_acc:.1f}%; {cat_to_dog} of the 1,000 true cat images are predicted as dogs. This is the largest animal-class confusion in the test matrix.')]
+          P(f'In the best full fine-tuning run, cat accuracy is {cat_acc:.1f}%; {cat_to_dog} of 1,000 true cats are predicted as dogs, while 40 dogs are predicted as cats. Cat/dog discrimination remains a prominent source of error.')]
 story.append(PageBreak())
 
-story += [P('Discussion and limitations','H1CN'),
-          P(f'With batch size 64 and 1,000 steps, LR 0.000375 reached {scaled_test:.2f}% test accuracy and LR 0.003 reached {main_test:.2f}%. These runs used the same seed, split and schedule, differing in LR. This is a single-seed comparison, not a universal LR claim.'),
-          P(f'A 3,000-step final-block run selected step {last_result["selected_step"]:,} and scored {last_result["test_accuracy"]*100:.2f}% test; extra training did not guarantee improvement. Frozen-feature probing scored {probe_test:.2f}% and is a labeled extension, not the paper’s full-finetuning result.'),
-          P('For this correctly classified cat, pretrained attention emphasizes the upper-left patch, while fine-tuning increases both upper-corner weights. The patches cover background/cushion regions. This single image does not establish object localization.'),
-          P('The team inspected test scores across multiple exploratory runs and used them to choose a follow-up LR condition. Therefore, cross-run test comparisons are exploratory; a confirmatory comparison would require a fresh test split that was not used to select follow-up runs.'),
-          P('Conclusion','H1CN'),
-          P(f'The authors’ ImageNet-21k ViT-B/32 checkpoint runs on MPS, and both official CIFAR-10 splits complete end-to-end evaluation. The best local full fine-tuning result is {main_test:.2f}% versus the paper’s {paper_accuracy:.2f}% reference, a gap of {main_gap:.2f} percentage points. This is a partial, resource-scaled reproduction, not the paper’s full schedule.'),
+story += [P('Code modification: training with fewer patch tokens','H1CN'),
+          P('We apply PatchDropout [3] through timm 1.0.22: after adding position embeddings, randomly retain 36 of 49 image patches per training image and preserve CLS (37 tokens versus 50). Validation and testing use all 50 tokens. This is an application of an existing method, not a new algorithm. The pretrained initialization, split, seed, batch, LR and 1,000-step budget are held fixed.'),
+          fitted(FIG/'efficiency_tradeoff.png',W-34*mm,64*mm),
+          P(f'Figure 4. Fresh paired runs: baseline {eff_base["test_accuracy"]*100:.2f}% test in {eff_base["train_seconds_including_validation"]:.1f} s; PatchDropout {eff_drop["test_accuracy"]*100:.2f}% in {eff_drop["train_seconds_including_validation"]:.1f} s. Timing includes data loading, validation and checkpoint I/O, excluding initialization and final test.','CaptionCN'),
+          P(f'Training time falls by {efficiency["train_time_reduction_fraction"]*100:.1f}%; the test difference is {efficiency["test_difference_percentage_points"]:+.2f} percentage points. Best validation scores are {eff_base["best_validation_accuracy"]*100:.2f}% and {eff_drop["best_validation_accuracy"]*100:.2f}%, selecting steps {eff_base["selected_step"]} and {eff_drop["selected_step"]}. Both checkpoints were fixed before the new test evaluations. No dropout-rate search used test results.'),
+          fitted(FIG/'efficiency_validation_curves.png',W-34*mm,58*mm),
+          P('Figure 5. Validation accuracy versus equal training steps and wall-clock time. Each point evaluates 1,000 held-out training images.','CaptionCN'),
+          P(f'A synchronized synthetic-batch benchmark (batch 64; three alternating rounds, five warmup and 15 timed updates per condition per round) reduced median forward/backward/clip/SGD time from {micro["summary"][0]["median_seconds"]:.3f} to {micro["summary"][1]["median_seconds"]:.3f} s ({micro["median_update_time_reduction"]*100:.1f}%). Evaluation outputs with identical weights match exactly in the CPU check. Parameter count and inference token count are unchanged. Peak memory was not measured.','SmallCN'),
+          P('Limits: one seed and one full run per condition; timing can vary with device load. Earlier test scores influenced a follow-up LR choice, and the same official test set is reused here. Comparisons remain exploratory, with no claim of statistical significance. Frozen probing’s 5.16 s excludes feature extraction.','SmallCN'),
           P('References','H1CN'),
           P('[1] A. Dosovitskiy et al., “An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale,” ICLR 2021. <link href="https://arxiv.org/abs/2010.11929" color="#1877B9">arXiv:2010.11929</link>.','RefCN'),
           P('[2] Google Research, <link href="https://github.com/google-research/vision_transformer" color="#1877B9">vision_transformer</link>, reference implementation and pretrained ViT models.','RefCN'),
+          P('[3] Y. Liu et al., “PatchDropout: Economizing Vision Transformers Using Patch Dropout,” WACV 2023. <link href="https://arxiv.org/abs/2208.07220" color="#1877B9">arXiv:2208.07220</link>.','RefCN'),
           P('Submission note: keep code and compact results; exclude downloaded weights, dataset, feature cache and large checkpoints. Final package must be below 50 MB and include the required run recording and short presentation.','SmallCN')]
 
 doc=SimpleDocTemplate(str(OUT),pagesize=A4,leftMargin=17*mm,rightMargin=17*mm,topMargin=12*mm,bottomMargin=18*mm,title='ViT-B/32 Reproduction on CIFAR-10',author='COMP5541 Group Project')

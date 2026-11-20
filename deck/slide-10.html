@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.card{position:absolute;width:360px;height:188px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);padding:30px 32px}
+.card .big{font:700 58px/1 'Inter',sans-serif;color:#FF7AE0;letter-spacing:-.01em}
+.card .f{font:400 16px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8FA0C4;text-transform:uppercase;margin-top:12px}
+.explain{position:absolute;left:920px;top:710px;width:904px;font:400 21px/1.6 'Inter',sans-serif;color:#C9D4EC}
+.explain b{color:#F2F6FF}
+.explain .mg{color:#FF7AE0}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">ANALYSIS · ERRORS</div><div class="title">The remaining mistakes are <span class="mg">natural</span></div><div class="bar"></div>
+
+<img src="assets/full_finetune_paper_lr_1000_confusion_matrix.png" style="position:absolute;left:96px;top:300px;width:660px;height:591px;border-radius:14px;border:1px solid #26345E;box-shadow:0 0 60px rgba(124,240,255,.10),0 24px 60px rgba(0,0,0,.45)">
+<div class="card" style="left:920px;top:300px"><div class="big">2.43%</div><div class="f">overall error rate</div></div>
+<div class="card" style="left:920px;top:508px"><div class="big">40</div><div class="f">dogs predicted as cats</div></div>
+<div class="card" style="left:1310px;top:300px"><div class="big">33</div><div class="f">cats predicted as dogs</div></div>
+<div class="card" style="left:1310px;top:508px"><div class="big">95.0%</div><div class="f">cat accuracy in best run</div></div>
+<div class="explain">The residual error is <b>mostly natural confusion</b>: cat ↔ dog is the dominant mix-up, exactly the near-duplicate classes humans find hardest. No systematic class collapse anywhere.</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">10 / 13</div>
+</div></body></html>

@@ -95,8 +95,10 @@ def split_indices(labels):
     return train, val
 
 
-def backbone():
-    model = timm.create_model(MODEL)
+def backbone(patch_drop_rate=0.0):
+    # timm defaults to no patch dropout; only override it for the extension.
+    options = {"patch_drop_rate": patch_drop_rate} if patch_drop_rate else {}
+    model = timm.create_model(MODEL, **options)
     model.load_pretrained(str(PRETRAINED / "ViT-B_32_imagenet21k.npz"))
     return model
 
@@ -329,7 +331,7 @@ def finetune(args):
     dev = device()
     run_dir = RESULTS / args.name
     run_dir.mkdir(parents=True, exist_ok=True)
-    model = backbone()
+    model = backbone(args.patch_drop_rate)
     model.reset_classifier(10)
     model = model.to(dev)
     torch.nn.init.zeros_(model.head.weight)
@@ -351,12 +353,15 @@ def finetune(args):
               "validation_size": len(val_idx), "input_size": 224,
               "trainable_parameters": sum(p.numel() for p in params),
               "total_parameters": sum(p.numel() for p in model.parameters()),
+              "training_tokens": 1 + max(1, int(49 * (1 - args.patch_drop_rate))),
+              "evaluation_tokens": 50,
               "warmup_steps": max(1, args.steps // 10),
               "paper_reference_accuracy": 0.9879,
               "protocol": "resource-scaled fine-tuning; differs from paper resolution and budget"}
     write_json(run_dir / "config.json", config)
     log(event="finetune_start", **config)
     step = 0
+    synchronize(dev)
     start = time.perf_counter()
     best_val = -1
     with (run_dir / "history.jsonl").open("w") as history:
@@ -395,23 +400,43 @@ def finetune(args):
                     model.train()
                 if step >= args.steps:
                     break
+    synchronize(dev)
     train_seconds = time.perf_counter() - start
+    write_json(run_dir / "training_summary.json", {
+        "train_seconds_including_validation": train_seconds,
+        "best_validation_accuracy": best_val,
+    })
+
+
+def test(args):
+    """Evaluate a fixed validation-selected checkpoint, including deferred runs."""
+    run_dir = RESULTS / args.name
+    config = json.loads((run_dir / "config.json").read_text())
+    training = json.loads((run_dir / "training_summary.json").read_text())
+    dev = device()
+    model = backbone(config["patch_drop_rate"])
+    model.reset_classifier(10)
+    model = model.to(dev)
     checkpoint = torch.load(run_dir / "best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(checkpoint["state_dict"])
-    test_loader = DataLoader(dataset(False), batch_size=args.batch_size, num_workers=2)
+    test_loader = DataLoader(dataset(False), batch_size=config["batch_size"], num_workers=2)
     synchronize(dev)
     test_start = time.perf_counter()
     pred = evaluate(model, test_loader, dev)
     synchronize(dev)
     test_seconds = time.perf_counter() - test_start
     np.savez(run_dir / "predictions.npz", **pred)
-    result = {"method": args.mode, "name": args.name,
+    result = {"method": config["mode"], "name": args.name,
               "test_accuracy": accuracy_score(pred["labels"], pred["predictions"]),
-              "test_size": len(pred["labels"]), "best_validation_accuracy": best_val,
-              "selected_step": checkpoint["step"], "steps": args.steps,
-              "train_seconds_including_validation": train_seconds,
+              "test_size": len(pred["labels"]),
+              "best_validation_accuracy": training["best_validation_accuracy"],
+              "selected_step": checkpoint["step"], "steps": config["steps"],
+              "train_seconds_including_validation": training["train_seconds_including_validation"],
               "test_seconds": test_seconds,
               "trainable_parameters": config["trainable_parameters"],
+              "patch_drop_rate": config["patch_drop_rate"],
+              "training_tokens": config["training_tokens"],
+              "evaluation_tokens": config["evaluation_tokens"],
               "paper_reference_accuracy": 0.9879,
               "difference_percentage_points": 100 * (accuracy_score(pred["labels"], pred["predictions"]) - 0.9879)}
     write_json(run_dir / "metrics.json", result)
@@ -420,14 +445,20 @@ def finetune(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("prepare", "benchmark", "extract", "probe", "finetune"))
+    parser.add_argument("command", choices=("prepare", "benchmark", "extract", "probe", "finetune", "test"))
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--steps", type=int, default=500)
     parser.add_argument("--lr", type=float, default=0.003)
     parser.add_argument("--eval-every", type=int, default=100)
     parser.add_argument("--mode", choices=("head", "last_block", "full"), default="head")
     parser.add_argument("--name", default="head_only")
+    parser.add_argument("--patch-drop-rate", type=float, default=0.0,
+                        help="Training-only patch dropout; evaluation keeps all patches")
+    parser.add_argument("--defer-test", action="store_true",
+                        help="Freeze validation selection before evaluating with the test command")
     args = parser.parse_args()
+    if not 0 <= args.patch_drop_rate < 1:
+        parser.error("--patch-drop-rate must be in [0, 1)")
     seed_everything()
     RESULTS.mkdir(parents=True, exist_ok=True)
     if args.command == "prepare":
@@ -435,6 +466,8 @@ def main():
         # torchvision extracts the official archive when the dataset is initialized.
         CIFAR10(ROOT / "data", train=True, download=True)
     globals()[args.command](args)
+    if args.command == "finetune" and not args.defer_test:
+        test(args)
 
 
 if __name__ == "__main__":

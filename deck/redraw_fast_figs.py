@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""Final-pass redraw of fast figures with deck-sized fonts."""
+import json, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+FONT = {
+    "figure.facecolor": "#080F28", "savefig.facecolor": "#080F28",
+    "axes.facecolor": "#0B1330", "axes.edgecolor": "#8FA0C4",
+    "axes.labelcolor": "#EAF2FF", "text.color": "#EAF2FF",
+    "xtick.color": "#9AA8C7", "ytick.color": "#9AA8C7",
+    "grid.color": "#2A3A66", "grid.alpha": 0.35,
+    "font.size": 14, "axes.titlesize": 15, "axes.titleweight": "bold",
+    "figure.titlesize": 16, "axes.labelsize": 13, "xtick.labelsize": 12, "ytick.labelsize": 12,
+}
+plt.rcParams.update(FONT)
+OUT = pathlib.Path("deck/assets"); OUT.mkdir(parents=True, exist_ok=True)
+ROOT = pathlib.Path("results")
+CYAN = "#7CF0FF"; MAG = "#FF7AE0"; BLUE = "#63C7FF"; AMBER = "#FFB454"
+
+# ---- confusion matrix (magma, readable fonts) ----
+CLASSES = ("airplane","automobile","bird","cat","deer","dog","frog","horse","ship","truck")
+m = json.loads((ROOT/"full_finetune_paper_lr_1000/metrics.json").read_text())
+cm = np.array(m["confusion_matrix"], dtype=float)
+norm = cm / cm.sum(axis=1, keepdims=True)
+fig, ax = plt.subplots(figsize=(7.6, 6.8), layout="constrained")
+im = ax.imshow(norm, cmap="magma", vmin=0, vmax=1)
+ax.set_xticks(range(10)); ax.set_yticks(range(10))
+ax.set_xticklabels(CLASSES, rotation=40, ha="right", rotation_mode="anchor")
+ax.set_yticklabels(CLASSES)
+ax.set_xlabel("Predicted class"); ax.set_ylabel("True class")
+ax.set_title("Full fine-tune (paper LR) — fraction per true class", pad=10)
+cbar = fig.colorbar(im, ax=ax, fraction=0.046); cbar.set_label("Fraction per true class")
+fig.savefig(OUT/"full_finetune_paper_lr_1000_confusion_matrix.png", dpi=180)
+plt.close(fig); print("confusion ok")
+
+# ---- efficiency figures (readable fonts) ----
+comp = json.loads((ROOT/"efficiency_comparison.json").read_text())
+base, mod = comp["conditions"]
+hist = []
+for name in (base["name"], mod["name"]):
+    hist.append([json.loads(l) for l in (ROOT/name/"history.jsonl").read_text().splitlines()])
+labels = ["Baseline", "PatchDropout 25%"]; colors = [BLUE, MAG]
+times = [base["train_seconds_including_validation"], mod["train_seconds_including_validation"]]
+scores = [base["test_accuracy"]*100, mod["test_accuracy"]*100]
+red = comp["train_time_reduction_fraction"]
+
+fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.7), layout="constrained")
+axes[0].barh(range(2), times, color=colors, height=0.5)
+axes[0].set(yticks=range(2), yticklabels=labels, xlim=(0, max(times)*1.22),
+            xlabel="Training + validation + checkpoint I/O (s)",
+            title=f"Training time: {red*100:.1f}% reduction")
+axes[0].invert_yaxis()
+for i, value in enumerate(times):
+    axes[0].text(value+5, i, f"{value:.1f}", va="center", fontsize=13)
+for i, result in enumerate((base, mod)):
+    axes[1].scatter(result["test_accuracy"]*100, i, color=colors[i], s=90)
+    axes[1].annotate(f'{result["test_accuracy"]*100:.2f}%', (result["test_accuracy"]*100, i),
+                     xytext=(0, 13), textcoords="offset points", ha="center", fontsize=13)
+axes[1].set(yticks=range(2), yticklabels=labels, ylim=(-.6, 1.6),
+            xlim=(min(scores)-.5, max(scores)+.5),
+            xlabel="Official CIFAR-10 test accuracy (%)", title="Accuracy after validation selection")
+axes[1].invert_yaxis(); axes[1].grid(axis="x", alpha=.2)
+fig.savefig(OUT/"eff_tradeoff.png", dpi=180); plt.close(fig); print("tradeoff ok")
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.7), layout="constrained")
+for name, history, color in zip(labels, hist, colors):
+    rows = [r for r in history if "validation_accuracy" in r]
+    for ax, x_key in zip(axes, ("step", "elapsed_seconds")):
+        ax.plot([r[x_key] for r in rows], [100*r["validation_accuracy"] for r in rows], "o-", label=name, color=color)
+        ax.set(ylabel="Validation accuracy (%)"); ax.grid(alpha=.2)
+axes[0].set(xlabel="Training step", title="Same 1,000-step training budget")
+axes[1].set(xlabel="Elapsed training time (s)", title="Validation accuracy versus time")
+axes[1].legend(fontsize=11)
+fig.savefig(OUT/"eff_curves.png", dpi=180); plt.close(fig); print("curves ok")
+
+# ---- position similarity (readable fonts) ----
+import analyze_results as ar
+ar.FIGURES = OUT
+ar.position_plot()
+print("position ok")

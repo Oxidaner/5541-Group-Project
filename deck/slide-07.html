@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.th{position:absolute;top:302px;font:600 16px/1 'Inter',sans-serif;letter-spacing:.2em;color:#8FA0C4;text-transform:uppercase}
+.c1{position:absolute;left:96px;width:860px;font:500 24px/1 'Inter',sans-serif;color:#F2F6FF}
+.c2{position:absolute;left:1010px;width:210px;text-align:right;font:400 22px/1 'JetBrains Mono',monospace;color:#C9D4EC}
+.c3{position:absolute;left:1300px;width:190px;text-align:right;font:400 22px/1 'JetBrains Mono',monospace;color:#C9D4EC}
+.c4{position:absolute;left:1570px;width:254px;text-align:right;font:600 26px/1 'JetBrains Mono',monospace;color:#F2F6FF}
+.c4.best{color:#FF7AE0}
+.tr{position:absolute;height:62px;border-top:1px solid #26345E}
+.insight{position:absolute;left:96px;top:900px;width:1728px;height:88px;border:1px solid #26345E;border-left:4px solid #FF7AE0;border-radius:14px;background:rgba(11,19,48,.55);padding:24px 30px;font:400 21px/1.5 'Inter',sans-serif;color:#C9D4EC}
+.insight b{color:#F2F6FF}
+.insight .mg{color:#FF7AE0}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">RESULTS · FINE-TUNING PROTOCOLS</div><div class="title">Capacity helps — the <span class="mg">learning rate</span> decides</div><div class="bar"></div>
+
+<div class="th c1">Configuration</div><div class="th c2">Params</div><div class="th c3">Steps</div><div class="th c4">Test acc.</div>
+<div class="tr" style="top:340px"><span class="c1">Linear probe — frozen features</span><span class="c2">7.7k</span><span class="c3">—</span><span class="c4">96.13%</span></div><div class="tr" style="top:416px"><span class="c1">Classification head only</span><span class="c2">7.7k</span><span class="c3">500</span><span class="c4">94.70%</span></div><div class="tr" style="top:492px"><span class="c1">Last block</span><span class="c2">7.1M</span><span class="c3">300</span><span class="c4">91.51%</span></div><div class="tr" style="top:568px"><span class="c1">Last block (long)</span><span class="c2">7.1M</span><span class="c3">3,000</span><span class="c4">92.56%</span></div><div class="tr" style="top:644px"><span class="c1">Full fine-tune</span><span class="c2">87.5M</span><span class="c3">300</span><span class="c4">92.83%</span></div><div class="tr" style="top:720px"><span class="c1">Full fine-tune · LR-scaled</span><span class="c2">87.5M</span><span class="c3">1,000</span><span class="c4">95.63%</span></div><div class="tr" style="top:796px"><span class="c1">Full fine-tune · paper LR</span><span class="c2">87.5M</span><span class="c3">1,000</span><span class="c4 best">97.57%</span></div>
+<div class="insight">Same seed, same budget — <span class="mg">the learning rate decides the run</span>: LR 0.003 → <b>97.57%</b> vs LR-scaled 0.000375 → <b>95.63%</b>, a 1.94 pp swing from one hyperparameter.</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">07 / 13</div>
+</div></body></html>

@@ -1,0 +1,17 @@
+{
+  "method": "full",
+  "name": "efficiency_patchdrop25_1000",
+  "test_accuracy": 0.9747,
+  "test_size": 10000,
+  "best_validation_accuracy": 0.979,
+  "selected_step": 800,
+  "steps": 1000,
+  "train_seconds_including_validation": 630.0141344170552,
+  "test_seconds": 43.108421624987386,
+  "trainable_parameters": 87462922,
+  "patch_drop_rate": 0.25,
+  "training_tokens": 37,
+  "evaluation_tokens": 50,
+  "paper_reference_accuracy": 0.9879,
+  "difference_percentage_points": -1.319999999999999
+}

@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.take{position:absolute;width:536px;height:300px;border:1px solid #26345E;border-radius:18px;background:rgba(11,19,48,.55);padding:34px 36px}
+.take .n{font:700 40px/1 'Inter',sans-serif;background:linear-gradient(90deg,#7CF0FF,#FF7AE0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.take .t{font:600 25px/1.2 'Inter',sans-serif;color:#F2F6FF;margin-top:18px}
+.take .d{font:400 19px/1.55 'Inter',sans-serif;color:#C9D4EC;margin-top:12px}
+.ref{position:absolute;left:96px;top:710px;width:1728px;font:400 16px/1.7 'JetBrains Mono',monospace;color:#8FA0C4;letter-spacing:.04em}
+.ref b{color:#C9D4EC}
+.thanks{position:absolute;left:96px;top:940px;font:600 28px/1 'Inter',sans-serif;color:#F2F6FF}
+.thanks .cy{color:#7CF0FF}
+.thanks .mg{color:#FF7AE0}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">CONCLUSION</div><div class="title">What we learned</div><div class="bar"></div>
+
+<div class="take" style="left:96px;top:310px"><div class="n">01</div><div class="t">ViT transfers.</div><div class="d">Pretrained ViT-B/32 reaches 97.57% on CIFAR-10 — 1.22 pp below the 98.79% reference, explained by a smaller budget.</div></div>
+<div class="take" style="left:672px;top:310px"><div class="n">02</div><div class="t">The LR is the lever.</div><div class="d">One hyperparameter — the paper's LR 0.003 — is worth 1.94 pp over the scaled-down alternative at the same seed.</div></div>
+<div class="take" style="left:1248px;top:310px"><div class="n">03</div><div class="t">Faster is nearly free.</div><div class="d">PatchDropout cuts training time 15.7% for −0.10 pp — a practical speed-up for constrained hardware.</div></div>
+<div class="ref"><b>REFERENCES</b> &nbsp;·&nbsp; Dosovitskiy et al., <b>An Image is Worth 16×16 Words</b>, ICLR 2021 &nbsp;·&nbsp; Liu et al., <b>PatchDropout</b>, arXiv:2208.07220 &nbsp;·&nbsp; Krizhevsky, <b>CIFAR-10</b>, 2009 &nbsp;·&nbsp; timm 1.0.22 &nbsp;·&nbsp; PyTorch 2.8.0</div>
+<div class="thanks">Thank you — <span class="cy">questions</span> <span class="mg">welcome</span>.</div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">13 / 13</div>
+</div></body></html>

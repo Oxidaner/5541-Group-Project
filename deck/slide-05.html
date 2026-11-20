@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.grid{position:absolute;left:96px;top:330px;width:1728px}
+.cell{position:absolute;width:544px;height:210px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);padding:30px 34px}
+.cell .f{font:400 16px/1.4 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8FA0C4;text-transform:uppercase}
+.cell .v{font:600 24px/1.35 'Inter',sans-serif;color:#F2F6FF;margin-top:12px}
+.cell .v .cy{color:#7CF0FF}
+.cell .v .mg{color:#FF7AE0}
+.strip{position:absolute;left:96px;top:820px;width:1728px;height:84px;border:1px solid #26345E;border-radius:16px;background:rgba(11,19,48,.55);display:flex;align-items:center;justify-content:space-between;padding:0 34px;font:500 18px/1 'JetBrains Mono',monospace;color:#8FA0C4;letter-spacing:.08em}
+.strip .on{color:#F2F6FF}
+.strip .cy{color:#7CF0FF}
+.strip .mg{color:#FF7AE0}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">EXPERIMENTAL SETUP</div><div class="title">A fair, resource-scaled protocol</div><div class="bar"></div>
+
+<div class="grid"><div class="cell" style="left:96px;top:0px"><div class="f">Model</div><div class="v">ViT-B/32 · <span class='cy'>ImageNet-21k pretrained</span> · timm 1.0.22</div></div><div class="cell" style="left:656px;top:0px"><div class="f">Dataset</div><div class="v">CIFAR-10 · 49,000 train · 1,000 val · 10,000 test</div></div><div class="cell" style="left:1216px;top:0px"><div class="f">Local budget</div><div class="v"><span class='mg'>224 px</span> · batch 64 · LR 0.003 · 1,000 steps</div></div><div class="cell" style="left:96px;top:232px"><div class="f">Paper protocol</div><div class="v">384 px · batch 512 · 10,000 steps → <span class='cy'>98.79%</span></div></div><div class="cell" style="left:656px;top:232px"><div class="f">Device</div><div class="v">Apple M4 Pro · MPS · PyTorch 2.8.0</div></div><div class="cell" style="left:1216px;top:232px"><div class="f">Selection</div><div class="v">best validation checkpoint · <span class='mg'>step 600</span> · fixed test split</div></div></div>
+<div class="strip"><span>PROTOCOL LADDER</span><span>LINEAR PROBE <span class="on">→</span> HEAD ONLY <span class="on">→</span> LAST BLOCK <span class="on">→</span> <span class="cy">FULL FINE-TUNE</span></span><span>INCREASING TRAINABLE CAPACITY</span></div>
+
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">05 / 13</div>
+</div></body></html>

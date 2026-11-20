@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#050A18}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:linear-gradient(135deg,#050A18 0%,#081028 50%,#0A1230 100%)}
+.glowc{position:absolute;right:-280px;top:-280px;width:920px;height:920px;border-radius:50%;background:radial-gradient(circle,rgba(124,240,255,.13),transparent 62%)}
+.glowm{position:absolute;left:-320px;bottom:-340px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,224,.10),transparent 60%)}
+.kick{position:absolute;left:96px;top:66px;font:500 17px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#7CF0FF;text-transform:uppercase}
+.title{position:absolute;left:92px;top:122px;font:700 60px/1.04 'Inter',sans-serif;color:#F2F6FF;letter-spacing:-.015em}
+.title .cy{color:#7CF0FF}
+.title .mg{color:#FF7AE0}
+.bar{position:absolute;left:96px;top:220px;width:150px;height:3px;background:linear-gradient(90deg,#7CF0FF,#FF7AE0)}
+.foot{position:absolute;left:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8FA0C4}
+.pageno{position:absolute;right:96px;bottom:54px;font:400 16px/1 'JetBrains Mono',monospace;color:#8FA0C4}
+
+.road{position:absolute;left:96px;top:330px;width:1728px}
+.card{position:absolute;width:330px;height:500px;border:1px solid #26345E;border-radius:18px;background:rgba(11,19,48,.55)}
+.num{position:absolute;left:34px;top:34px;font:700 64px/1 'Inter',sans-serif;background:linear-gradient(90deg,#7CF0FF,#FF7AE0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ct{position:absolute;left:34px;top:140px;font:600 28px/1 'Inter',sans-serif;color:#F2F6FF}
+.cd{position:absolute;left:34px;top:200px;width:262px;font:400 20px/1.55 'Inter',sans-serif;color:#C9D4EC}
+.arrow{position:absolute;top:180px;width:22px;text-align:center;font:500 26px/1 'JetBrains Mono',monospace;color:#7CF0FF}
+</style></head>
+<body><div class="slide">
+<div class="glowc"></div><div class="glowm"></div>
+<div class="kick">ROADMAP</div><div class="title">What we'll cover</div><div class="bar"></div>
+<div class="road"><div class="card" style="left:96px;top:0"><div class="num">01</div><div class="ct">The paper</div><div class="cd">ViT and the 16×16 idea — why it broke the CNN monopoly.</div></div><div class="arrow" style="left:430px">→</div><div class="card" style="left:442px;top:0"><div class="num">02</div><div class="ct">Method</div><div class="cd">Patch → tokens → Transformer. How ViT-B/32 actually sees.</div></div><div class="arrow" style="left:776px">→</div><div class="card" style="left:788px;top:0"><div class="num">03</div><div class="ct">Setup</div><div class="cd">CIFAR-10, ImageNet-21k weights, and a fair protocol.</div></div><div class="arrow" style="left:1122px">→</div><div class="card" style="left:1134px;top:0"><div class="num">04</div><div class="ct">Results</div><div class="cd">Accuracy ladder, attention, and positional encoding.</div></div><div class="arrow" style="left:1468px">→</div><div class="card" style="left:1480px;top:0"><div class="num">05</div><div class="ct">Extension</div><div class="cd">PatchDropout: 15.7% faster training for −0.10 pp.</div></div></div>
+<div class="foot">COMP 5541 · AN IMAGE IS WORTH 16×16 WORDS · VIT-B/32 ON CIFAR-10</div>
+<div class="pageno">02 / 13</div>
+</div></body></html>
